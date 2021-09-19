@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" id="page">
+  <link rel="stylesheet" href="../style.css">
+  <head>
+    <title>Aaron's Magnificent Drawer!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="src/lab4.js"></script>
+  </head>  
+  <body onload="main()">
+    <h1>3D Demo</h1>
+    
+    <a class="link" href="../graphics.html">Back</a>
+    <a class="link" href="../../index.html">Home</a>
+    <div></div>
+
+    <section class="indent-1">
+      <section>
+        <b>WASD to move, QE to rotate, mouse to look</b>
+        <div></div>
+        <input id="lightButton" class="button" type="button" value="Lighting">
+        <b id="lightText">Lighting: ON</b>
+        <div></div>
+        <input id="animButton" class="button" type="button" value="Animation">
+        <b id="animText">Animation: ON</b>
+      </section>
+  
+      <section>
+        <canvas id="canid" width="800" height="800">
+          Internet Explorer not supported
+        </canvas>
+      </section>
+    </section>
+  </body>
+</html>
