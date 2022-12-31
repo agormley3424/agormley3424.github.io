@@ -7,6 +7,7 @@ class Map {
     this.height = y;
     this.rand = r;
     this.map = [];
+    this.secondLoop = false;
     let xpos;
     let ypos = -1;// will be incremented on first pass
     for (let i = 0; i < x * y; i++) {
@@ -42,9 +43,16 @@ class Map {
 
     const result = [];
     for (let i = 0; i < neighbors.length; i++) {
-      if (onlyOrthogonal && i % 2 === 1) continue;
+      if (onlyOrthogonal && i % 2 !== 0) continue;
       if (neighbors[i] !== null) result.push(neighbors[i]);
     }
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(result);
+    //   this.secondLoop = true;
+    // }
+
     return result;
   }
 
@@ -80,7 +88,22 @@ class Map {
 
   getRandomNeighborOfType (point, biome, onlyOrthogonal = false) {
     const n = this.getNeighborsOfType(point, biome, onlyOrthogonal);
-    return this.rand.callRandom(n);
+
+    const result = this.rand.callRandom(n);
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(result);
+    //   this.secondLoop = true;
+    // }
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(point);
+    //   this.secondLoop = true;
+    // }
+
+    return result;
   }
 
   hasNeighbors (point, onlyOrthogonal = false) {
@@ -101,6 +124,13 @@ class Map {
         result.push(n[i]);
       }
     }
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(result);
+    //   this.secondLoop = true;
+    // }
+
     return result;
   }
 
@@ -111,6 +141,13 @@ class Map {
         result.push(this.map[i]);
       }
     }
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(result);
+    //   this.secondLoop = true;
+    // }
+
     return result;
   }
 

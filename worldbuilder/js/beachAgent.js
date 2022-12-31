@@ -16,6 +16,13 @@ class BeachAgent {
   generate (map) {
     this.defineShoreline(map);
     this.beachList = map.getPointsOfType('shore');
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(this.beachList);
+    //   this.secondLoop = true;
+    // }
+
     for (const s of this.beachList) {
       if (noise(s.getX(), s.getY()) >= 0.5) {
         s.setBiome('coast');
@@ -32,6 +39,7 @@ class BeachAgent {
     while (beachList.length > 0) {
       const beachPoint = beachList.pop();
       const point = map.getRandomNeighborOfType(beachPoint, 'coast');
+      //console.log(point);
       if (point !== undefined && this.tokens > 1 && noise(point.getX() / this.octave, point.getY() / this.octave) < this.beachNoiseMax) {
         point.setBiome('beach');
       }
@@ -43,6 +51,13 @@ class BeachAgent {
 
   defineShoreline (map) {
     const c = map.getPointsOfType('coast');
+
+    // if (!this.secondLoop)
+    // {
+    //   console.log(c);
+    //   this.secondLoop = true;
+    // }
+
     for (const p of c) {
       if (map.getNeighborsOfType(p, 'ocean').length > 0) {
         if (noise(p.getX() / this.octave, p.getY() / this.octave) < this.beachNoiseMax) {

@@ -69,6 +69,7 @@ function setup () {
     }
   }
   var worldSeed = 0xa127a3a25f;
+  noiseSeed(worldSeed);
 
   const canvas = createCanvas(mWidth, mHeight);
   canvas.parent('canvasSect');

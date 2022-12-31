@@ -19,6 +19,7 @@ class CoastAgent {
     this.tokens = tokens;
     this.limit = limit;
     this.direction = null;
+    this.secondLoop = false;
     //this.numAgents = 2 ^ (Math.floor(Math.log2(tokens) - Math.floor(Math.log2(limit))));
   }
 
@@ -124,12 +125,26 @@ class CoastAgent {
     /*
     Raises a point out of the ocean and sets its biome to coast.
     */
+
+    if (!this.secondLoop)
+    {
+      console.log(point);
+      //this.secondLoop = true;
+    }
+
     let newElevation = 0;
     //newElevation += Math.ceil(30 * noise(point.getX(), point.getY()));
     newElevation += Math.ceil(20 * noise(point.getX() / 10, point.getY() / 10));
     newElevation += Math.ceil(20 * noise(point.getX() / 100, point.getY() / 100));
     point.setElevation(newElevation);
     point.setBiome('coast');
+
+    if (!this.secondLoop)
+    {
+      console.log(point);
+      this.secondLoop = true;
+    }
+
     return point;
   }
 
