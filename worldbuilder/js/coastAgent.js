@@ -128,7 +128,7 @@ class CoastAgent {
 
     if (!this.secondLoop)
     {
-      console.log(point);
+      // console.log(point);
       //this.secondLoop = true;
     }
 
@@ -141,7 +141,7 @@ class CoastAgent {
 
     if (!this.secondLoop)
     {
-      console.log(point);
+      //console.log(point);
       this.secondLoop = true;
     }
 

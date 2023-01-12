@@ -187,6 +187,7 @@ function main () {
     camMatrix.setPerspective(30, canvas.width / canvas.height, 1, 60);
     camMatrix.lookAt(eyePos[0], eyePos[1], eyePos[2], lookAt[0], lookAt[1], lookAt[2], up[0], up[1], up[2]);
     modelMatrix.setTranslate(2.5, 0, 1);
+    modelMatrix.setRotate
     context.uniformMatrix4fv(context.getUniformLocation(context.program, 'camMatrix'), false, camMatrix.elements);
     context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatrix'), false, modelMatrix.elements);
     drawQuads(1);
@@ -514,12 +515,21 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
   // Return the sum of two vectors
   function vectorAdd (vec1, vec2) {
     const resultVec = [];
+
+    //console.log(vec1);
+    //console.log(vec2);
+
     if (vec1.length !== vec2.length) {
       throw 'vectorAdd Error: Vectors have unequal length';
     } else {
       for (let i = 0; i < vec1.length; ++i) {
         resultVec.push(vec1[i] + vec2[i]);
+        // console.log(vec1[i]);
+        // console.log(vec2[i]);
+        // console.log(vec1[i] + vec2[i]);
+        // console.log("\n");
       }
+      //console.log("\n");
       return resultVec;
     }
   }
@@ -590,18 +600,52 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
     }
   }
 
+    // Scales a vector and returns the result
+  function vectorProdRet (scalar, vec) {
+    let newVec = [-1, -1, -1];
+
+    for (let i = 0; i < newVec.length; ++i) {
+      newVec[i] = vec[i] * scalar;
+    }
+
+    return newVec;
+  }
+
   // Normalizes a vector
   function vecNormal (vec) {
     const length = vectorMag(vec);
     vectorProd((1 / length), vec);
   }
 
+  // // Returns an xyz rotation matrix around the y axis
+  // function rotMatrixH (rotAngle) {
+  //   if (rotAngle === 0) {
+  //     return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+  //   }
+  //   return [[Math.cos(Math.PI / rotAngle), 0, Math.sin(Math.PI / rotAngle)], [0, 1, 0], [-1 * Math.sin(Math.PI / rotAngle), 0, Math.cos(Math.PI / rotAngle)]];
+  // }
+
+  
+  // // Returns an xyz rotation matrix around the y axis
+  // function rotMatrixH (rotAngle) {
+  //   if (rotAngle === 0) {
+  //     return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+  //   }
+  //   return [[Math.cos(rotAngle), Math.sin(rotAngle), 0],
+  //            [-1 * Math.sin(rotAngle), Math.cos(rotAngle), 0],
+  //            [0, 0, 1]];
+  // }
+
   // Returns an xyz rotation matrix around the y axis
   function rotMatrixH (rotAngle) {
+    rotAngle = degToRad(rotAngle);
+
     if (rotAngle === 0) {
       return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
     }
-    return [[Math.cos(Math.PI / rotAngle), 0, Math.sin(Math.PI / rotAngle)], [0, 1, 0], [-1 * Math.sin(Math.PI / rotAngle), 0, Math.cos(Math.PI / rotAngle)]];
+    return [[Math.cos(rotAngle), 0, -1 * Math.sin(rotAngle)],
+              [0, 1, 0],
+              [Math.sin(rotAngle), 0, Math.cos(rotAngle)]];
   }
 
   // Returns an xyz rotation matrix around the x axis
@@ -610,6 +654,26 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
       return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
     }
     return [[1, 0, 0], [0, Math.cos(Math.PI / rotAngle), -1 * Math.sin(Math.PI / rotAngle)], [0, Math.sin(Math.PI / rotAngle), Math.cos(Math.PI / rotAngle)]];
+  }
+
+  // Returns an xyz rotation matrix around an arbitrary axis
+  function rotMatrixArb (rotAngle, rotAxis) {
+    rotAngle = degToRad(rotAngle);
+
+    rotX = rotAxis[0];
+    rotY = rotAxis[1];
+    rotZ = rotAxis[2];
+    cosA = Math.cos(rotAngle);
+    sinA = Math.sin(rotAngle);
+    return [[cosA + (Math.pow(2, rotX) * (1 - cosA)), 
+             (rotX * rotY * (1 - cosA)) - (rotZ * sinA),
+             (rotY * sinA) + (rotX * rotZ * (1 - cosA))],
+             [(rotZ * sinA) + (rotX * rotY * (1 - cosA)),
+             cosA + (Math.pow(2, rotY) * (1 - cosA)),
+             (-1 * rotX * sinA) + (rotY * rotZ * (1 - cosA))],
+             [(-1 * rotY * sinA) + (rotX * rotZ * (1 - cosA)),
+             (rotX * sinA) + (rotY * rotZ * (1 - cosA)),
+             (cosA + (Math.pow(2, rotZ) * (1 - cosA)))]];
   }
 
   function degToRad (degrees) {
@@ -639,14 +703,14 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
   /// // Define event handlers /////
 
   canvas.onmousemove = function (e) {
-    const newMouse = [e.clientX, e.clientY];
-    if (lastMouse[0] !== null) {
-      const xDif = newMouse[0] - lastMouse[0];
-      const yDif = newMouse[1] - lastMouse[1];
-      rotateCameraH(-2500 / xDif);
-      rotateCameraV(-2500 / yDif);
-    }
-    lastMouse = newMouse;
+    // const newMouse = [e.clientX, e.clientY];
+    // if (lastMouse[0] !== null) {
+    //   const xDif = newMouse[0] - lastMouse[0];
+    //   const yDif = newMouse[1] - lastMouse[1];
+    //   rotateCameraH(100 / xDif);
+    //   rotateCameraV(-100 / yDif);
+    // }
+    // lastMouse = newMouse;
   };
 
   canvas.onmouseout = function (e) {
@@ -668,18 +732,50 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
   };
 
   function rotateCameraH(angle) {
+
+    //console.log(angle);
     mat = rotMatrixH(angle);
-    const diff = vectorSub(eyePos, up);
+    //const diff = vectorSub(eyePos, up);
+
+    //console.log(up);
     // Align camera vector with up vector
-    lookAt = vectorAdd(lookAt, [-1 * diff[0], -1 * diff[1], -1 * diff[2]]);
-    // Align camera vector with y-axis
-    lookAt = vectorAdd(lookAt, [-1 * up[0], 0, -1 * up[2]]);
-    // Rotate lookAt around y-axis
+    // lookAt = vectorAdd(lookAt, [-1 * diff[0], -1 * diff[1], -1 * diff[2]]);
+    // // Align camera vector with y-axis
+    // lookAt = vectorAdd(lookAt, [-1 * up[0], 0, -1 * up[2]]);
+    // // Rotate lookAt around y-axis
+    // lookAt = matrixProd(mat, lookAt);
+    // // Undo y-axis alignment
+    // lookAt = vectorAdd(lookAt, [up[0], 0, up[2]]);
+    // // Undo camera up alignment
+    // lookAt = vectorAdd(lookAt, [diff[0], diff[1], diff[2]]);
+
+    // console.log(lookAt);
+    // console.log(eyePos);
+    // console.log(vectorProd(-1, eyePos));
+    // console.log(vectorAdd(lookAt, vectorProd(-1, eyePos)));
+    // console.log(0 + -9);
+    //console.log(mat);
+
+    lookAt = vectorAdd(lookAt, vectorProdRet(-1, eyePos));
+
+    //console.log(lookAt);
     lookAt = matrixProd(mat, lookAt);
-    // Undo y-axis alignment
-    lookAt = vectorAdd(lookAt, [up[0], 0, up[2]]);
-    // Undo camera up alignment
-    lookAt = vectorAdd(lookAt, [diff[0], diff[1], diff[2]]);
+    //console.log(lookAt);
+
+    lookAt = vectorAdd(lookAt, eyePos);
+    //console.log(lookAt);
+
+    
+
+    
+
+    // camMatrix.translate(eyePos * -1);
+    // camMatrix.rotate(angle, up[0], up[1], up[2]);
+    // camMatrix.translate(eyePos);
+
+    //lookAt = matrixProd(camMatrix, lookAt);
+
+    //console.log(lookAt);
 
     /*
     lookAt = vectorAdd(lookAt, [-1 * eyePos[0], 0, -1 * eyePos[2]]);
@@ -687,25 +783,41 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
     lookAt = vectorAdd(lookAt, [eyePos[0], 0, eyePos[2]]);*/
   }
 
+  // function rotateCameraH(angle) {
+    
+  // }
+
   // Rotate camera vertically by some angle
   function rotateCameraV(angle) {
     forwardVec = vectorSub(lookAt, eyePos);
     rightVec = vectorCross(up, forwardVec);
-    mat = rotMatrixV(angle);
+    // mat = rotMatrixV(angle);
     
-    // Translate frame to center so that rightVec corresponds to camera position
-    lookAt = vectorAdd(lookAt, [-1 * eyePos[0], -1 * eyePos[1], -1 * eyePos[2]]);
-    // Translate frame such that rightVec is aligned with the x axis
-    lookAt = vectorAdd(lookAt, [0, -1 * rightVec[1], -1 * rightVec[2]]);
+    // // Translate frame to center so that rightVec corresponds to camera position
+    // lookAt = vectorAdd(lookAt, [-1 * eyePos[0], -1 * eyePos[1], -1 * eyePos[2]]);
+    // // Translate frame such that rightVec is aligned with the x axis
+    // lookAt = vectorAdd(lookAt, [0, -1 * rightVec[1], -1 * rightVec[2]]);
 
-    lookAt[0] = Math.abs(lookAt[0]);
+    // lookAt[0] = Math.abs(lookAt[0]);
 
-    // Rotate lookAt around the x-axis
-    lookAt = matrixProd(mat, lookAt);
-    // Translate frame such that rightVec x-alignment is undone
-    lookAt = vectorAdd(lookAt, [0, rightVec[1], rightVec[2]]);
-    // Translate frame such that the camera is in its original position
-    lookAt = vectorAdd(lookAt, [eyePos[0], eyePos[1], eyePos[2]]);
+    // // Rotate lookAt around the x-axis
+    // lookAt = matrixProd(mat, lookAt);
+    // // Translate frame such that rightVec x-alignment is undone
+    // lookAt = vectorAdd(lookAt, [0, rightVec[1], rightVec[2]]);
+    // // Translate frame such that the camera is in its original position
+    // lookAt = vectorAdd(lookAt, [eyePos[0], eyePos[1], eyePos[2]]);
+
+    // console.log(camMatrix);
+
+    mat = rotMatrixArb(angle, rightVec);
+    
+    lookAt = vectorAdd(lookAt, vectorProdRet(-1, eyePos));
+
+    //console.log(lookAt);
+    //lookAt = matrixProd(mat, lookAt);
+    //console.log(lookAt);
+
+    lookAt = vectorAdd(lookAt, eyePos);
   }
 
   webPage.onkeydown = function (e) {
@@ -748,10 +860,10 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
           lookAt = vectorAdd(lookAt, backVec);
           break;
         case 'q':
-          rotateCameraH(100);
+          rotateCameraH(-5);
           break;
         case 'e':
-          rotateCameraH(-100);
+          rotateCameraH(5);
           break;
         default:
           // console.log('webPage.onkeydown Error: Key not recognized: ' + e.key);
@@ -759,6 +871,9 @@ context.uniformMatrix4fv(context.getUniformLocation(context.program, 'modelMatri
     } catch (exception) {
       console.log(exception);
     }
+
+
+    //console.log(lookAt);
   };
 
   // drawAnimal();

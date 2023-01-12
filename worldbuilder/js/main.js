@@ -44,7 +44,7 @@ let debug = false;
 
 function setup () {
   class Random {
-    constructor (seed = 0xcafe00face) {
+    constructor (seed = 0xa127a3a25f) {
       this.seed = seed;
       randomSeed(seed);
     }
@@ -68,7 +68,9 @@ function setup () {
       }
     }
   }
-  var worldSeed = 0xa127a3a25f;
+  var worldSeed = random(0, 1000000);
+  //console.log(worldSeed);
+
   noiseSeed(worldSeed);
 
   const canvas = createCanvas(mWidth, mHeight);

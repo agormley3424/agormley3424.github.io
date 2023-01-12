@@ -42,6 +42,10 @@ div {
   margin:30px;
 }
 
+h2 {
+  z-index: 500;
+}
+
 .button {
   background-color: #000000; /* Green */
   border-color: #72AB00;
@@ -81,4 +85,8 @@ h {
 
 .sliderText {
   cursor: help;
+}
+
+.descriptive-picture {
+  align-content:center;
 }
