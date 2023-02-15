@@ -65,3 +65,13 @@ body {
     width:50%;
     float:left;
   }
+
+  .left {
+    color:fuchsia;
+    padding-right: 100px;
+  }
+
+  .rightimg{
+    color:#ff0000;
+    padding-left: 200px;
+  }
