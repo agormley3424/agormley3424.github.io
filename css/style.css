@@ -75,3 +75,11 @@ body {
     color:#ff0000;
     padding-left: 200px;
   }
+
+  #office1{
+    text-align: left;
+  }
+
+  #office2{
+    text-align: right;
+  }
