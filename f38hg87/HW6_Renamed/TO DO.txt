@@ -1,6 +1,0 @@
-Make sure all genres are added, not only the first
-Make sure |s are being added correctly for genres
-Make sure a new submission clears the current table (check video for this)
-Add specific event focus
-Add specific event details
-Beautify the front-end
