@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="../../style.css">
+  <head>
+    <title>Aaron's Magnificent Drawer!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="../lib/webgl-utils.js"></script>
+    <script src="../lib/webgl-debug.js"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="./engine.js"></script>
+  </head>  
+  <body onload="main()">
+    <section class="indent-1">
+    </section>
+    <section>
+      <p></p>
+      <input id="clearbutton" class="button" type="button" value="Clear Canvas">
+      <p></p>
+      <b>Shape Settings</b>
+      <p></p>
+      <h id = "drawmode">Shape Selected: Squares</h>
+      <p></p>
+      <h> Drawing Tool: </h>
+      <input id="squarebutton" class="button" type="button" value="Squares">
+      <input id="trianglebutton" class="button" type="button" value="Triangles">
+      <input id="circlebutton" class="button" type="button" value="Circles">
+      <p></p>
+      <h>Shape Size:</h>
+      <input id="sizeslide" type="range" value="50" min="0" max="300" step="1">
+      <h>(Circles) Polygon Count:</h>
+      <input id="segmentslide" type="range" value = "20.0" min = "1.0" max = "50.0" step="1">
+      <p></p>
+      <b>Color Settings</b>
+      <p></p>
+      <h id = "shapecolor">Shape Color (RGB): (255, 122, 122)</h>
+      <p></p>
+      <h>Red</h>
+      <input id="redslide" type="range" value="1.0" min="0.0" max="1.0" step="0.01">
+      <h>Green</h>
+      <input id="greenslide" type="range" value="0.5" min="0.0" max="1.0" step="0.01">
+      <h>Blue</h>
+      <input id="blueslide" type="range" value="0.5" min="0.0" max="1.0" step="0.01">
+      <p></p>
+      <b>Alpha Settings</b>
+      <p></p>
+      <h>Strength: </h>
+      <input id="alphaslide" type="range" value="1.0" min="0.0" max="1.0" step="0.01">
+      <p></p>
+      <h id="alphamodebutton">Mode Selected: Transparency</h>
+      <p></p>
+      <h>Modes: </h>
+      <input id="subbutton" class="button" type="button" value="Transparency">
+      <input id="inversebutton" class="button" type="button" value="Saturation">
+    </section>
+    <section>
+      <canvas id="canid" width="800" height="800">
+        Not supported on Internet Explorer
+      </canvas>
+    </section>
+    </section>
+    
+
+
+  </body>
+</html>

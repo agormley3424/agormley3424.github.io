@@ -1,0 +1,85 @@
+/* CSS files add styling rules to your content */
+
+body {
+    font-family: helvetica, arial, sans-serif;
+    text-align: center;
+    margin: 2em;
+    background-color: #000000;
+    color: #ff0000;
+  }
+  
+  a {
+    display:inline-block;
+    background-color: #000000;
+  }
+
+  .dir {
+    font-size:30pt;
+    padding-top:50px;
+  }
+
+  .download {
+    font-size:30pt;
+  }
+  
+  span {
+    background-color: #000000;
+  }
+
+  h1 {
+    margin:auto;
+    font-style: italic;
+    color: #72AB00;
+  }
+  
+  div {
+    align-content:center;
+    margin:30px;
+  }
+  
+  .button {
+    background-color: #000000; /* Green */
+    border-color: #72AB00;
+    color: #72AB00;
+    font-size: 16px;
+  }
+
+  b {
+    color: #72AB00;
+  }
+
+  h {
+    color: #9A9A9A;
+  }
+
+  .slider {
+    color: #72AB00;
+  }
+
+  .indent-1 {
+    float:left;
+
+  }
+
+  .indent-1 section {
+    width:50%;
+    float:left;
+  }
+
+  .left {
+    color:fuchsia;
+    padding-right: 100px;
+  }
+
+  .rightimg{
+    color:#ff0000;
+    padding-left: 200px;
+  }
+
+  #office1{
+    text-align: left;
+  }
+
+  #office2{
+    text-align: right;
+  }

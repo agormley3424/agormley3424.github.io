@@ -1,0 +1,10 @@
+Google Geocoding:
+  URL: https://maps.googleapis.com/maps/api/geocode/json?&key=YOUR_API_KEY
+  Key: AIzaSyBmKpWW7k6eeEiJkccFLThjonWApR40Xis
+Ticketmaster:
+  URL: https://app.ticketmaster.com/discovery/v2/events.json?apikey=
+  Key: ZUe4QATYrGXNGmv3VGkGdAz0gC3XXeVo
+  Secret: RZeIADSPmPIOAMm8
+ipinfo: 
+  URL: ipinfo.io?token=721bebb667bf09
+  Key: 721bebb667bf09

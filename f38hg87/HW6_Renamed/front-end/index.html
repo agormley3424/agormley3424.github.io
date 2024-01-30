@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>HW6</title>
+    <link href="./style.css" rel="stylesheet">
+    <script src="./code.js" defer></script> 
+  </head>
+  <body>
+    <!-- Store the initial info form and eventual table -->
+    <header>
+      <form id="form" action="backEndURLHere" method="GET">
+        <h2>Events Search</h2>
+
+        <div class="boxHeader">
+          Keyword<span class="asterisk">*</span>
+        </div>
+        <input id="keywordBox" type="text" required oninput="setKeyword()">
+
+
+        <div class="twoColumns">
+          <div class="boxHeader">
+            Distance (miles)
+          </div>
+          
+          <div class="boxHeader">
+            Category<span class="asterisk">*</span>
+          </div>
+        </div>
+
+
+        <div class="twoColumns">
+          <div class="boxHeader">
+            <input id ="distanceBox" type="text" inputmode="decimal" placeholder="10" oninput="setDistance()">
+          </div>
+          
+          <div class="boxHeader">
+            <select id="categoryBox" oninput="setCategory()">
+              <option value="default">Default</option>
+              <option value="music">Music</option>
+              <option value="sports">Sports</option>
+              <option value="artstheatre">Arts & Theatre</option>
+              <option value="film">Film</option>
+              <option value="misc">Miscellaneous</option>
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="boxHeader">
+          Location<span class="asterisk">*</span>
+          <label>
+            <input id="locationAutoBox" type="checkbox" oninput="setLocationAuto()">
+            Auto-Detect Location
+          </label>
+        </div>
+
+        <div>
+          <input id="locationBox" type="text" required oninput="setLocation()">
+        </div>
+
+        <div>
+          <!-- <input id="submitButton" type="button" value="Submit" onclick="submitForm()"> -->
+          <button type="button" onclick="submitForm()">Submit</button>
+          <input type="reset" class="resetButton" value="Clear" onclick="hideAll()">
+        </div>
+
+        <!-- <div>
+          <input type="button" value="testButton" onclick="testFunc()">
+        </div> -->
+      </form>
+      <div id="dataDiv" hidden="true">
+        <table id="dataTable" class>
+          <!-- <colgroup>
+            <col span="1" class="Date">
+            <col class="Icon">
+          </colgroup> -->
+          <tr>
+            <th scope="col">Date</th>
+            <th>Icon</th>
+            <th onclick="sortEvent()">Event</th>
+            <th onclick="sortGenre()">Genre</th>
+            <th onclick="sortVenue()">Venue</th>
+          </tr>
+          <!-- <tr>
+            <td>Sample Date</td>
+            <td>Sample Icon</td>
+            <td>Sample Event</td>
+            <td>Sample Genre</td>
+            <td>Sample Venue</td>
+          </tr>
+          <colgroup></colgroup> -->
+        </table>
+      </div>
+    </header>
+    <!-- Store the event info box -->
+    <main id="mainBody" hidden="true">
+      <form id="venueForm">
+        <h1 id="name"></h1>
+        <div id="venueBox" class="twoColumns">
+          <section id="venueBody" class="leftAlign">
+            <!-- <section>
+              Text1
+            </section>
+            <section>
+              Text2
+            </section> -->
+              <div class="venueDetail">
+                <h3>Date</h3>
+                <p id="date"></p>  
+              </div>
+              <h3>Artist/Team</h3>
+              <div id="artistHeader" class="venueDetail">
+                
+
+              <!-- <p id="artist">Date and Time Here</p> -->
+            </div>
+    
+              <div class="venueDetail">
+              <h3>Venue</h3>
+              <p id="venue"></p>
+            </div>
+    
+              <div class="venueDetail">
+              <h3>Genres</h3>
+              <p id="genres"></p>
+            </div>
+    
+              <div class="venueDetail">
+              <h3>Price Ranges</h3>
+              <p id="priceRange"></p>
+            </div>
+    
+              <div class="venueDetail">
+              <h3>Ticket Status</h3>
+              <p id="status"></p>
+            </div>
+    
+              <div class="venueDetail">
+              <h3>Buy Ticket At:</h3>
+              <a id="buyAt" target="_blank">Ticketmaster</a>
+              </div>
+            </section>
+
+          <img id="venueImg" src="https://static.wikia.nocookie.net/sanicsource/images/2/20/Weegee.png/revision/latest?cb=20160111000748">
+        <!-- </section> -->
+        </div>
+      </form>
+
+      <div id="detailPrompt" onclick="highlightDetail()">
+        Show Venue Details
+      </div>
+    </main>
+    <!-- Store the details box -->
+    <footer hidden="true">
+
+      <div id="venueDetails">
+        <h2 id="venueName"></h2>
+        <img id="venueLogo">
+        <div id="detailDiv" class="twoColumns">
+          <section id="address">
+            <div>
+              <span class="boldText">Address:&nbsp;</span>
+            </div>
+            <div id="firstLine">
+            </div>
+            <div id="secondLine">
+            </div>
+            <div id="thirdLine">
+            </div>
+            <br>
+            <a id="openGoogle" target="_blank">Open in Google Maps</a>
+
+          </section>
+          <section id="moreEvents">
+            <a id="moreEventLink" target="_blank">More events at this venue</a>
+          </section>
+         </div> 
+      </div>
+    </footer>
+  </body>
+</html>
